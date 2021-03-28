@@ -4,12 +4,14 @@ var ironman,man;
 var rockImg,rockGroup;
 var diamondGroup,diamondImg;
 var score=0;
+var spikeGroup,spikeImg
 
 function preload() {
   backgroundImg = loadImage("images/bg.jpg");
   ironman = loadImage("images/iron.png")
   rockImg = loadImage("images/stone.png");
   diamondImg= loadImage("images/diamond.png")
+  spikeImg =loadImage("images/spikes.png")
 
 }
 
@@ -25,6 +27,7 @@ function setup() {
   man.setCollider("rectangle",10,10,300,300);
   rockGroup=new Group();
   diamondGroup=new Group();
+  spikeGroup=new Group();
   
  
 }
@@ -58,6 +61,19 @@ function draw() {
 
       
     }
+    generatespike();
+    for(var i = 0 ; i< (spikeGroup).length ;i++){
+      var temp = (spikeGroup).get(i) ;
+      
+      if (temp.isTouching(man)) {
+        score=score-5;
+        temp.destroy();
+        temp=null;
+        }
+          
+      }
+
+      
     generaterock ();
 for (var i = 0; i <rockGroup.length; i++){
       var temp = rockGroup.get(i);
@@ -95,3 +111,21 @@ function generateDiamonds(){
   }
 
 }
+
+
+function generatespike(){
+  if(frameCount % 150 === 0){
+    var spike = createSprite(1200,100,10,40);
+    spike.addImage(spikeImg);
+    spike.x = random(50, 850);
+    spike.velocityY = 4;
+    spike.scale=0.7;
+     
+   spikeGroup.add(spike);
+   spike.lifetime=600;
+  
+    }
+  }
+
+
+
